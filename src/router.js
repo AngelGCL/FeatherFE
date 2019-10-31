@@ -27,9 +27,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Explore.vue'),
     },
     {
-      path: '/signup',
-      name: 'signup',
-      component: () => import(/* webpackChunkName: "about" */ './views/SignUp.vue'),
+      path: '/comp-signup',
+      name: 'compsignup',
+      component: () => import(/* webpackChunkName: "about" */ './views/SignUpComp.vue'),
+    },
+    {
+      path: '/prof-signup',
+      name: 'profsignup',
+      component: () => import(/* webpackChunkName: "about" */ './views/SignUpProf.vue'),
     },
     {
       path: '/signin',

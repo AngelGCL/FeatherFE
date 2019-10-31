@@ -14,10 +14,30 @@
             <b-nav-item :active='$route.name =="explore"' to="/explore">Explore</b-nav-item>
           </b-navbar-nav>
           <!-- ONLY when logged out -->
-          <b-navbar-nav v-if="!isAuth" class="ml-auto">
-            <b-nav-item :active='$route.name =="signup"' to="/signup">Register</b-nav-item>
-            <b-nav-item :active='$route.name =="signin"' to="/signin">Log In</b-nav-item>
-          </b-navbar-nav>
+        <b-navbar-nav v-if="!isAuth" class="ml-auto">
+          <b-nav-item @click="$bvModal.show('modal-nav')">Register</b-nav-item>
+          <b-modal id="modal-nav">
+            <template v-slot:modal-header="{ hide }">
+              <h5>Choose the type of account</h5>
+            </template>
+
+            <template v-slot:default="{ hide }">
+              <b-button @click="hide()" :active='$route.name =="compsignup"' to="/comp-signup">Comapanies</b-button>
+              <b-button @click="hide()" :active='$route.name =="profsignup"' to="/prof-signup">Professors</b-button>
+            </template>
+
+            <template v-slot:modal-footer="{ ok, cancel, hide }">
+              <b-button size="sm" variant="danger" @click="cancel()">
+                Cancel
+              </b-button>
+              <!-- Button with custom close trigger value -->
+              <b-button size="sm" variant="success" @click="hide()">
+                Submit
+              </b-button>
+            </template>
+          </b-modal>
+          <b-nav-item :active='$route.name =="signin"' to="/signin">Sign In</b-nav-item>
+        </b-navbar-nav>
           <b-navbar-nav v-else class="ml-auto">
             <b-nav-item class="mr-2" :active='$route.name =="signin"' to="/signin">My Profile</b-nav-item>
             <b-button v-on:click="logout" pill variant="outline-warning">Log Out</b-button>
@@ -29,7 +49,8 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+    import {BModal as $bvModal} from "bootstrap-vue/src/components/modal/modal"
+    import { mapGetters } from 'vuex'
 
   export default {
     computed : {
@@ -38,7 +59,7 @@
       })
     },
     methods: {
-      logout: function () { 
+      logout: function () {
 
         this.$store.dispatch('auth/logout')
         .then(() => {

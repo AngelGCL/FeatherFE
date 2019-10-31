@@ -9,12 +9,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'aos/dist/aos.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faUserPlus, faChartBar, faPlus, faUserGraduate, faSearch, faUserCircle, faTachometerAlt, faBuilding,
-} from '@fortawesome/free-solid-svg-icons';
+
+import { faUserPlus, faChartBar, faPlus, faUserGraduate, faSearch, faUserCircle, faTachometerAlt, faBuilding, } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App.vue';
 import router from './router';
+import 'vue-search-select/dist/VueSearchSelect.css'
 import store from '../store/index';
 
 library.add(faUserPlus);
@@ -40,5 +40,6 @@ new Vue({
   },
   router,
   store,
+  validations: {},
   render: h => h(App),
 }).$mount('#app');
