@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Vuex from 'vuex';
 
+Vue.use(Vuex);
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -41,5 +43,48 @@ export default new Router({
       name: 'signin',
       component: () => import(/* webpackChunkName: "about" */ './views/SignIn.vue'),
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import(/* webpackChunkName: "about" */ './views/Profile.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 });
+
+// router.beforeEach((to, from, next) => {
+//   let token = localStorage.getItem('token');
+//   let requireAuth = to.matched.some(record => record.meta.requiresAuth);
+
+//   if (!requireAuth) {
+//     next();
+//   }
+
+//   if (requireAuth && !token) {
+//     next('/signin');
+//   }
+
+//   // if (to.path === '/login') {
+//   //   if (token) {
+//   //     axiosAuth.post('/verify-token').then(() => {
+//   //       next('/dashboard');
+//   //     }).catch(() => {
+//   //       next();
+//   //     });
+//   //   }
+//   //   else {
+//   //     next();
+//   //   }
+//   // }
+
+//   // if (requireAuth && token) {
+//   //   axiosAuth.post('/verify-token').then(() => {
+//   //     next();
+//   //   }).catch(() => {
+//   //     next('/login');
+//   //   })
+//   // }
+//   next();
+// });
+
+export default router;

@@ -2,8 +2,8 @@
   <div class="home">
     <div class="wrapper-banner">
       <div class="main-title">
-        <h1>ILP</h1>
-        <h1 data-aos="fade-up">Explore | Connect | Collaborate</h1>
+        <h1>ilp</h1>
+        <h2 data-aos="fade-up">Explore | Connect | Collaborate</h2>
       </div>
       <vue-particles
         color="#337137"
@@ -25,7 +25,7 @@
     <div class="features container-fluid">
       <b-row align-h="center" align-v="center" class="headline pt-5 pb-5">
         <b-col class="brand-name" data-aos="fade-up">
-          <h1>What is ILP?</h1>
+          <h1>What is ilp?</h1>
         </b-col>
         <b-col class="white-card shadow">
           <div class="mb-3 mt-3">
@@ -86,7 +86,7 @@
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Leckerli+One|Open+Sans:400,400i,600,600i,700,700i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Hind+Madurai:700|Josefin+Sans:400,700|Leckerli+One|Open+Sans:400,400i,600,600i,700,700i&display=swap");
 canvas {
   display: inline-block;
 }
@@ -157,7 +157,7 @@ canvas {
 }
 .tools {
   height: 350px;
-  background: #efeef0;
+  background: white;
 }
 .tools .white-card {
   border-top: 5px solid #337137;
@@ -205,8 +205,11 @@ canvas {
   z-index: 999;
 }
 .main-title h1 {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Hind Madurai", sans-serif;
   font-weight: bold;
+  font-size: 4rem;
+}
+.main-title h2 {
   font-size: 3.2rem;
 }
 .brand-name h1 {

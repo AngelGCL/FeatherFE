@@ -2,17 +2,17 @@ import router from '@/router';
 import Vue from 'vue';
 
 const state = {
-    email: null,
+    userid: null,
     token: null,
 };
 
 const mutations = {
     authUser(state, userData) {
-        state.email = userData.email;
+        state.userid = userData.userid;
         state.token = userData.token;
     },
     clearAuthData(state) {
-        state.email = null;
+        state.userid = null;
         state.token = null;
     },
 };
@@ -36,11 +36,11 @@ const actions = {
                 }
             })
             .then(response => {
-                console.log(response.body.token);
+                console.log(response);
                 if (response.body.token) {
-                    commit('authUser', { email: authData.email, token: response.body.token });
+                    commit('authUser', { userid: authData.userid, token: response.body.token });
                     localStorage.setItem('token', response.body.token);
-                    localStorage.setItem('email', authData.email);
+                    localStorage.setItem('userid', response.body.userid);
                     router.replace('dashboard'); 
 
                 }
@@ -55,17 +55,17 @@ const actions = {
     },
     autoLogin({ commit }) {
         let token = localStorage.getItem('token');
-        let username = localStorage.getItem('username');
+        let userid = localStorage.getItem('userid');
 
-        if (!token || !username) {
+        if (!token || !userid) {
             return;
         }
 
-        commit('authUser', { username: username, token: token });
+        commit('authUser', { userid: userid, token: token });
     },
     logout: ({ commit }) => {
         commit('clearAuthData');
-        localStorage.removeItem('email');
+        localStorage.removeItem('userid');
         localStorage.removeItem('token');
         router.replace('');
     },
