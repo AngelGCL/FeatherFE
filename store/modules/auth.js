@@ -35,7 +35,7 @@ const actions = {
         });
         console.log(data_json)
         return new Promise((resolve, reject) => {
-            axios({url: 'http://localhost:5000/Feather/signin', data: data_json, method: 'POST'}).then(response => {
+            axios({url: 'https://feather-ilp-back.herokuapp.com/Feather/signin', data: data_json, method: 'POST'}).then(response => {
                 console.log(response);
                 if (response.data.token) {
                     localStorage.setItem('token', response.data.token);
@@ -52,7 +52,7 @@ const actions = {
                 reject(error);
             });
           })
-        
+
 
     },
     autoLogin({ commit }) {

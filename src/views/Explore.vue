@@ -1,7 +1,7 @@
  <template>
   <div class="explore">
-    
-    
+
+
     <b-form inline>
         <div class="search-inputs mx-auto mb-5 mt-5">
     <b-form-input
@@ -20,7 +20,7 @@
     >
     </b-form-select>
 
-    
+
 
 
     <b-button @click="onSubmit"  variant="primary">Search</b-button>
@@ -40,7 +40,7 @@
     ></b-pagination>
 
     <p class="mt-3">Current Page: {{ pagination.currentPage }}</p>
-    
+
     <b-table
       id="my-table"
       :items="pagination.items"
@@ -100,7 +100,7 @@ export default {
       var userid = this.$route.params.id;
       var token = localStorage.getItem("token");
       //Cosntruct URL with parameters chosen in Frontend!
-      
+
 
       axios({
         url: "http://localhost:5000/Feather/search?profiletype=" + this.form.filter,
@@ -157,7 +157,7 @@ export default {
     },
     init() {
       //Get all avaialbe tags in the database
-      
+
     }
   },
   beforeRouteEnter(to, from, next) {

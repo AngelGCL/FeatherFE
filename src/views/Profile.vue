@@ -281,7 +281,7 @@ export default {
             // });
             // console.log(profile_info_edited);
             // axios({
-            //   url: "http://localhost:5000/Feather/getprofilebyuserid/",
+            //   url: "https://feather-ilp-back.herokuapp.com/Feather/getprofilebyuserid/",
             //   data: data_json,
             //   method: "post"
             // })
@@ -315,7 +315,7 @@ export default {
       //Populate Profile Information at start
       var userid = this.$route.params.id;
       axios({
-        url: "http://localhost:5000/Feather/getprofilebyuserid/" + userid,
+        url: "https://feather-ilp-back.herokuapp.com/Feather/getprofilebyuserid/" + userid,
         method: "get"
       })
         .then(response => {

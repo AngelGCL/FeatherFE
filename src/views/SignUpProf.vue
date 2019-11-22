@@ -224,7 +224,7 @@
                         firstname: this.form.firstname,
                         lastname: this.form.lastname,
                     });
-                    this.$http.post('http://localhost:5000/Feather/signup/verification', ver_data, {
+                    this.$http.post('https://feather-ilp-back.herokuapp.com/Feather/signup/verification', ver_data, {
                         headers: {
                             "Content-type": "application/json"
                         }
@@ -255,7 +255,7 @@
                         activities: this.activities,
                         Val: this.Val
                     });
-                    this.$http.post('http://localhost:5000/Feather/professor/signup', data_json,{
+                    this.$http.post('https://feather-ilp-back.herokuapp.com/Feather/professor/signup', data_json,{
                         headers: {
                             "Content-type": "application/json"
                         }
@@ -272,7 +272,7 @@
                 }
             },
             searchName: function() {
-                this.$http.get('http://localhost:5000/Feather/professor/signup/findname'+'/'+this.name_data.firstname+'/'
+                this.$http.get('https://feather-ilp-back.herokuapp.com/Feather/professor/signup/findname'+'/'+this.name_data.firstname+'/'
                     +this.name_data.lastname, {
                     headers: {
                         "Content-type": "application/json"
