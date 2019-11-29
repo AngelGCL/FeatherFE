@@ -8,7 +8,7 @@
         <div class='ui form'>
           <b-input-group prepend="Activity" class="mts-3">
             <b-form-input v-model="actname" placeholder="Activity title" type="text"></b-form-input>
-            <b-form-input v-model="actdate" placeholder="YYYY-MM-DD" type="text"></b-form-input>
+            <date-picker name="date" v-model="activity.actdate" :config="config"></date-picker>
             <template>
               <b-form-select v-model="fundrange" :options="options"></b-form-select>
             </template>
@@ -31,10 +31,12 @@
 </template>
 
 <script>
+    import datePicker from 'vue-bootstrap-datetimepicker';
     import { ModelSelect } from 'vue-search-select';
     export default {
         components: {
-            ModelSelect
+            ModelSelect,
+            datePicker,
         },
         data() {
             return {
@@ -47,8 +49,14 @@
                     { value: '-$5k', text: '-$5k' },
                     { value: '$5k - $10k', text: '$5k - $10k' },
                     { value: '+$10k', text: '+$10k' },
-                    { value: '', text: 'Select'}
+                    { value: 'Fund not monetized', text: 'Fund not monetized' }
                 ],
+                config: {
+                  format: 'YYYY-MM-DD',
+                  useCurrent: false,
+                  showClear: true,
+                  showClose: true,
+                }
             };
         },
         methods: {

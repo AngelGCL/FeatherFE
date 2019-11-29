@@ -122,7 +122,7 @@
          var token = localStorage.getItem("token");
          //Cosntruct URL with parameters chosen in Frontend!
 
-         axios.get("http://localhost:5000/Feather/search", {
+         axios.get("https://feather-ilp-back.herokuapp.com/Feather/search", {
              params: {
                q: this.form.search,
                profiletype: this.form.radioSelected,
@@ -189,7 +189,7 @@
        init() {
          //Get all tags in the database
          axios({
-             url: "http://localhost:5000/Feather/tags",
+             url: "https://feather-ilp-back.herokuapp.com/Feather/tags",
              method: "get"
            })
            .then(response => {
