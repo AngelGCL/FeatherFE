@@ -9,6 +9,7 @@
                 <b-col><div style="border-color: #242e3b; border-width: 3px;">{{activity.actname}}</div></b-col>
                 <b-col><p>{{activity.actdate}}</p></b-col>
                 <b-col><p>{{activity.fundrange}}</p></b-col>
+                <b-col><p>{{activity.ongoing}}</p></b-col>
                 <b-button class="right floated edit icon" size="sm" v-on:click="showForm" squared>
                   <font-awesome-icon icon="edit"/>Edit
                 </b-button>
@@ -29,6 +30,7 @@
         <b-form-input v-model="activity.actname" placeholder="Activity title" type="text"></b-form-input>
         <date-picker name="date" v-model="activity.actdate" :config="config"></date-picker>
         <b-form-select v-model="activity.fundrange" :options="options"></b-form-select>
+        <b-form-checkbox v-model="activity.ongoing"></b-form-checkbox>
         <template>
           <b-form-textarea v-model="activity.description" type="text"></b-form-textarea>
         </template>

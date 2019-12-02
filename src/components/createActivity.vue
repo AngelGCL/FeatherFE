@@ -8,10 +8,11 @@
         <div class='ui form'>
           <b-input-group prepend="Activity" class="mts-3">
             <b-form-input v-model="actname" placeholder="Activity title" type="text"></b-form-input>
-            <date-picker name="date" v-model="activity.actdate" :config="config"></date-picker>
+            <date-picker name="date" v-model="actdate" :config="config"></date-picker>
             <template>
               <b-form-select v-model="fundrange" :options="options"></b-form-select>
             </template>
+            <b-form-checkbox v-model="ongoing">Ongoing</b-form-checkbox>
           </b-input-group>
           <template>
             <b-form-textarea size="sm" v-model="description" placeholder="Description"></b-form-textarea>
@@ -44,6 +45,7 @@
                 actdate: '',
                 fundrange: '',
                 description: '',
+                ongoing: false,
                 isCreating: false,
                 options: [
                     { value: '-$5k', text: '-$5k' },
@@ -72,16 +74,19 @@
                     const actdate = this.actdate;
                     const fundrange = this.fundrange;
                     const description = this.description;
+                    const ongoing = this.ongoing;
                     this.$emit('create-activity', {
                         actname,
                         actdate,
                         fundrange,
                         description,
+                        ongoing,
                     });
                     this.actname = '';
                     this.actdate = '';
                     this.fundrange = '';
                     this.description = '';
+                    this.ongoing = false;
                     this.isCreating = false;
                 }
             },
