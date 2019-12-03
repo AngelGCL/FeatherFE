@@ -10,7 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'aos/dist/aos.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
-import { faUniversity, faEdit, faAt, faLock, faSuitcase, faUserPlus, faChartBar, faPlus, faUserGraduate, faSearch, faUserCircle, faTachometerAlt, faBuilding, } from '@fortawesome/free-solid-svg-icons';
+import { faUniversity,faTrashAlt, faEdit, faAt, faLock, faSuitcase, faUserPlus, faChartBar, faPlus, faUserGraduate, faSearch, faUserCircle, faTachometerAlt, faBuilding, faEnvelope, } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App.vue';
 import router from './router';
@@ -20,6 +20,7 @@ import Axios from 'axios';
 import Multiselect from 'vue-multiselect';
 
 library.add(faUserPlus);
+library.add(faEnvelope);
 library.add(faAt);
 library.add(faLock);
 library.add(faSuitcase);
@@ -32,6 +33,7 @@ library.add(faUserGraduate);
 library.add(faPlus);
 library.add(faEdit);
 library.add(faUniversity);
+library.add(faTrashAlt);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('multiselect', Multiselect);
 

@@ -60,7 +60,7 @@
           <b-container class="white-card">
             <h3>Create a profile. It's easy!</h3>
             <p>Search for your name in our database</p>
-            <b-button pill id="register-btn">
+            <b-button pill id="register-btn" @click="$bvModal.show('register-modal')">
               Register Here
               <font-awesome-icon icon="user-circle" />
             </b-button>

@@ -1,10 +1,28 @@
 <template>
   <div class="signupcomp">
     <b-container fluid class="text-center">
-      <div class="mx-auto white-card rounded shadow mt-5">
+      <div class="mx-auto white-card rounded shadow mt-5" v-show="isVerifying">
+        <h4>Validation</h4>
+        <b-container>
+          <b-form @submit.stop="signup">
+            <b-form-group>
+              <b-input-group class="mts-3">
+                <b-form-input placeholder="Valid Code"
+                              v-model="valcode"
+                              type="text"
+                ></b-form-input>
+              </b-input-group>
+            </b-form-group>
+          </b-form>
+          <div>
+            <b-button v-on:click="signup" variant="warning" class="mt-4">Validate</b-button>
+          </div>
+        </b-container>
+      </div>
+      <div class="mx-auto white-card rounded shadow mt-5" v-show="!isVerifying">
         <h4>Welcome to ILP</h4>
         <b-container>
-          <b-form @submit.stop.prevent="signup">
+          <b-form @submit.stop.prevent="verify">
             <b-form-group>
               <b-input-group prepend="Email" class="mts-3">
                 <b-form-input placeholder="Email"
@@ -56,13 +74,10 @@
                   </template>
                   <template v-slot:default="{ hide }">
                    <!-- search bar -->
-                    <template>
-                      <!-- object value -->
-                      <model-select :options="options"
-                                    v-model="form.compName"
-                                    placeholder="select item">
-                      </model-select>
-                    </template>
+                    <model-select :options="options"
+                                  v-model="form.compName"
+                                  placeholder="select item">
+                    </model-select>
                   </template>
                   <template v-slot:modal-footer="{ cancel, ok }">
                     <b-button size="sm" variant="success" @click="ok()">
@@ -96,7 +111,7 @@
                 </b-collapse>
               </div>
             </b-form-group>
-            <b-button v-on:click.self="signup" variant="warning" class="mt-4">Sign Up</b-button>
+            <b-button v-on:click.self="verify" variant="warning" class="mt-4">Sign Up</b-button>
           </b-form>
         </b-container>
       </div>
@@ -109,9 +124,10 @@
     import { required, minLength, email } from "vuelidate/lib/validators";
     import createTag from "../components/createTag";
     import TagList from "../components/TagList";
-  //import { ModelSelect } from 'vue-search-select'
+    import { ModelSelect } from 'vue-search-select';
+    import sweetalert from 'sweetalert';
 
-  export default {
+    export default {
       mixins: [validationMixin],
       data() {
           return {
@@ -132,6 +148,9 @@
                   compName: '',
               },
               tags: [],
+              randnum: '',
+              valcode: '',
+              isVerifying: false,
           };
       },
       watch: {
@@ -161,10 +180,34 @@
           },
         },
         methods: {
-            signup: function () {
+            verify: function () {
                 this.$v.form.$touch();
                 if (this.$v.form.$anyError) {
-                    return;
+                    sweetalert('Error', 'Please fill in all required fields.', 'error');
+                } else {
+                    const ver_data = JSON.stringify({
+                        email: this.form.email,
+                        firstname: this.form.firstName,
+                        lastname: this.form.lastName,
+                    });
+                    this.$http.post('https://feather-ilp-back.herokuapp.com/Feather/signup/verification', ver_data, {
+                        headers: {
+                            "Content-type": "application/json"
+                        }
+                    }).then(
+                        response => {
+                            this.randnum = response.data['Code'];
+                            this.isVerifying = true;
+                        },
+                        error => {
+                            sweetalert('Error', 'Something went wrong.', 'error');
+                        },
+                    );
+                }
+            },
+            signup: function () {
+                if (this.valcode.toString() !== this.randnum.toString()) {
+                    sweetalert('Error', 'Please fill in all required fields.', 'error');
                 } else {
                     const data_json = JSON.stringify({
                         email: this.form.email,
@@ -175,13 +218,17 @@
                         compname: this.form.compName,
                         tags: this.tags,
                     });
-                    this.$http.post('http://localhost:5000/Feather/company/signup', data_json, {
+                    this.$http.post('https://feather-ilp-back.herokuapp.com/Feather/company/signup', data_json, {
                         headers: {
                             "Content-type": "application/json"
                         }
-                    }).then(function (data) {
-                        console.log(data);
-                    });
+                    }).then(response => {
+                            this.isVerifying = false;
+                            this.$router.push('/signin')
+                    },
+                        error => {
+                            sweetalert('Error', 'Something went wrong.', 'error');
+                        });
                 }
             },
             createTag: function(newTag) {
@@ -190,7 +237,7 @@
             },
         },
         components: {
-            //ModelSelect,
+            ModelSelect,
             TagList,
             createTag,
         },

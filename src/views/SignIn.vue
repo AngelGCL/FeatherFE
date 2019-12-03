@@ -41,12 +41,12 @@
                     <font-awesome-icon class="input-icon" icon="lock" />
                   </b-input-group-prepend>
                   <b-form-input
-                  id="password-input"
-                  placeholder="Password"
-                  name="password-input"
-                  v-model="$v.form.password.$model"
-                  type="password"
-                ></b-form-input>
+                    id="password-input"
+                    placeholder="Password"
+                    name="password-input"
+                    v-model="$v.form.password.$model"
+                    type="password"
+                  ></b-form-input>
                 </b-input-group>
               </b-form-group>
               <b-button id="submit-btn" type="submit">
@@ -54,6 +54,15 @@
                 <b-spinner type="grow" v-show="loading" small></b-spinner>
               </b-button>
             </b-form>
+            <div class="privacy-links text-center mt-5">
+              <a href="https://www.upr.edu/reglamentacion-y-politicas-institucionales/" class="mb-5">
+                <span>Privacy Policy</span>
+              </a>
+              <span> | </span>
+              <a href="https://www.upr.edu/reglamentacion-y-politicas-institucionales/">
+                <span> Terms of Use</span>
+              </a>
+            </div>
           </b-container>
         </div>
       </b-col>
@@ -123,9 +132,22 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Hind+Madurai:700|Josefin+Sans:400,700|Leckerli+One|Open+Sans:400,400i,600,600i,700,700i&display=swap");
-.input-icon{
- font-size: 18px;
- color: #5c6672;
+.privacy-links a span, .privacy-links span{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 0.8rem;
+  color:#5c6672;
+}
+a{
+  color:#5c6672;
+}
+a:hover{
+  color:#5c6672;
+  text-decoration: underline;
+}
+.input-icon {
+  font-size: 18px;
+  color: #5c6672;
 }
 .container {
   padding: 0 2rem;
@@ -170,7 +192,7 @@ h4 {
 .white-card h4 {
   color: #313e50;
 }
-.white-card span {
+.white-card h4 span {
   font-size: 35px;
   color: #337137;
   font-weight: bold;
