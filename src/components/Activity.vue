@@ -5,38 +5,61 @@
         <div>
           <b-card no-body class="colum-1" border-variant="dark">
             <b-container class="bv-example-row">
-              <b-row>
-                <b-col><div style="border-color: #242e3b; border-width: 3px;">{{activity.actname}}</div></b-col>
-                <b-col><p>{{activity.actdate}}</p></b-col>
-                <b-col><p>{{activity.fundrange}}</p></b-col>
-                <b-col><p>{{activity.ongoing}}</p></b-col>
-                <b-button class="right floated edit icon" size="sm" v-on:click="showForm" squared>
-                  <font-awesome-icon icon="edit"/>Edit
-                </b-button>
-                <b-button class="right floated trash icon" size="sm" variant="danger" v-on:click="deleteAct(activity)" squared>
-                  <font-awesome-icon icon="trash-alt"/>
-                </b-button>
-              </b-row>
-              <b-row>
-                {{activity.description}}
-              </b-row>
+              <table class="activity-table">
+                <tr class="headers">
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Range of Funds</th>
+                  <th>Ongoing</th>
+                  <th rowspan="4"><b-button class="right floated edit icon" size="sm" v-on:click="showForm" squared>
+                    <font-awesome-icon icon="edit"/>Edit
+                  </b-button>
+                    <b-button class="right floated trash icon" size="sm" variant="danger" v-on:click="deleteAct(activity)" squared>
+                      <font-awesome-icon icon="trash-alt"/>
+                    </b-button></th>
+                </tr>
+                <tr class="data-row">
+                  <td>{{activity.actname}}</td>
+                  <td>{{activity.actdate}}</td>
+                  <td>{{activity.fundrange}}</td>
+                  <td>{{activity.ongoing}}</td>
+                </tr>
+                <tr class="description-head">
+                  <th colspan="4">Description</th>
+                </tr>
+                <tr class="description-row">
+                  <td colspan="4">{{activity.description}}</td>
+                </tr>
+              </table>
             </b-container>
           </b-card>
         </div>
       </div>
     </b-container>
-    <div class="content" v-show="isEditing">
+    <div class="content" style="background-color: white" v-show="isEditing">
       <b-input-group class="mts-3">
-        <b-form-input v-model="activity.actname" placeholder="Activity title" type="text"></b-form-input>
-        <date-picker name="date" v-model="activity.actdate" :config="config"></date-picker>
-        <b-form-select v-model="activity.fundrange" :options="options"></b-form-select>
-        <b-form-checkbox v-model="activity.ongoing"></b-form-checkbox>
-        <template>
-          <b-form-textarea v-model="activity.description" type="text"></b-form-textarea>
-        </template>
-        <b-input-group-append>
+        <b-row>
+          <b-col>
+            <label style="background-color: white">Title</label>
+            <b-form-input v-model="activity.actname" type="text"></b-form-input>
+          </b-col>
+          <b-col>
+            <label style="background-color: white">Date</label>
+            <date-picker name="date" v-model="activity.actdate" :config="config"></date-picker></b-col>
+          <b-col>
+            <label style="background-color: white">Funding</label>
+            <b-form-select v-model="activity.fundrange" :options="options"></b-form-select></b-col>
+          <b-col>
+            <label style="background-color: white">Ongoing</label>
+            <b-form-checkbox v-model="activity.ongoing"></b-form-checkbox></b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <label style="background-color: white">Description</label>
+            <b-form-textarea v-model="activity.description" type="text"></b-form-textarea>
+          </b-col>
           <b-button variant="secondary" v-on:click="hideForm(activity)">Save</b-button>
-        </b-input-group-append>
+        </b-row>
       </b-input-group>
     </div>
   </div>
@@ -82,5 +105,13 @@
 </script>
 
 <style scoped>
+  .activity-table{
+    width:100%;
+    table-layout: fixed;
+  }
+  table, td, th{
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
 
 </style>
