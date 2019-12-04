@@ -49,6 +49,12 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Profile.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/adminpanel',
+      name: 'adminpanel',
+      component: () => import(/* webpackChunkName: "about" */ './views/AdminPanel.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 });
 

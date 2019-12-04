@@ -18,6 +18,8 @@ import 'vue-search-select/dist/VueSearchSelect.css';
 import store from '../store/index';
 import Axios from 'axios';
 import Multiselect from 'vue-multiselect';
+import VueGoogleCharts from 'vue-google-charts';
+
 
 library.add(faUserPlus);
 library.add(faExternalLinkSquareAlt);
@@ -43,6 +45,7 @@ Vue.use(Vuex);
 Vue.use(VueParticles);
 Vue.use(VueResource);
 Vue.use(BootstrapVue);
+Vue.use(VueGoogleCharts);
 Vue.config.productionTip = false;
 
 Vue.$http = Axios;
