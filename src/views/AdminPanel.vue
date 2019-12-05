@@ -42,6 +42,22 @@
   />
     </b-col>
   </b-row>
+  <b-row>
+    <b-col>
+      <GChart
+    type="PieChart"
+    :data="chart5Data"
+    :options="chart5Options"
+  />
+    </b-col>
+    <b-col>
+       <GChart
+    type="PieChart"
+    :data="chart6Data"
+    :options="chart6Options"
+  />
+    </b-col>
+  </b-row>
 </b-container>
 </div>
 
@@ -87,6 +103,20 @@
         ],
         chart4Options: {
             title: "Updated Professors Accounts Per Month",
+            legend: {position: 'none'}
+        },
+        chart5Data: [
+          ['Department', 'Quantity'],
+        ],
+        chart5Options: {
+            title: "Total User Accounts Per Department",
+            legend: {position: 'none'}
+        },
+        chart6Data: [
+          ['Company', 'Quantity'],
+        ],
+        chart6Options: {
+            title: "Total User Accounts Per Company",
             legend: {position: 'none'}
         },
         loading: true,
@@ -232,6 +262,38 @@
               console.log(response.data[i].date);
                this.chart4Data.push([
                  response.data[i].date,
+                 response.data[i].qty
+               ]);
+             }
+           })
+           .catch(error => {
+             console.log(`error: ${error}`);
+           });
+           axios({
+             url: "http://localhost:5000/Feather/chart/5",
+             method: "get"
+           })
+           .then(response => {
+             for (var i = 0; i < response.data.length; i++) {
+              console.log(response.data[i].date);
+               this.chart5Data.push([
+                 response.data[i].department,
+                 response.data[i].qty
+               ]);
+             }
+           })
+           .catch(error => {
+             console.log(`error: ${error}`);
+           });
+           axios({
+             url: "http://localhost:5000/Feather/chart/6",
+             method: "get"
+           })
+           .then(response => {
+             for (var i = 0; i < response.data.length; i++) {
+              console.log(response.data[i].date);
+               this.chart6Data.push([
+                 response.data[i].department,
                  response.data[i].qty
                ]);
              }

@@ -27,6 +27,8 @@ const router = new Router({
       path: '/explore',
       name: 'explore',
       component: () => import(/* webpackChunkName: "about" */ './views/Explore.vue'),
+      meta: { requiresAuth: true },
+
     },
     {
       path: '/comp-signup',
@@ -61,7 +63,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem('token');
   let requireAuth = to.matched.some(record => record.meta.requiresAuth);
-
+  console.log(requireAuth);
   if (!requireAuth) {
     next();
   }
