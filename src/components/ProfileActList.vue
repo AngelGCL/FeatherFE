@@ -1,16 +1,17 @@
 <template>
   <div>
     <activity v-on:delete-activity="deleteAct"
-              v-for="activity in activities"
+              v-for="activity in prof_activities"
               :activity.sync="activity"></activity>
   </div>
 </template>
 
 <script>
-  import sweetalert from 'sweetalert';
-  import Activity from './Activity';
+    import sweetalert from 'sweetalert';
+    import Activity from './Activity';
     export default {
-        props: ['activities'],
+        name: ['prof-activity-list'],
+        props: ['prof-activities'],
         components: {
             Activity,
         },
@@ -25,24 +26,24 @@
                     type: 'input',
                     buttons: {
                         'cancel': {
-                          text: "Cancel",
-                          value: false,
-                          visible: true,
-                          className: "",
-                          closeModal: true,
+                            text: "Cancel",
+                            value: false,
+                            visible: true,
+                            className: "",
+                            closeModal: true,
                         },
                         'confirm': {
-                          text: "OK",
-                          value: true,
-                          visible: true,
-                          className: "",
-                          closeModal: false,
+                            text: "OK",
+                            value: true,
+                            visible: true,
+                            className: "",
+                            closeModal: false,
                         }
-                      },
+                    },
                 }).then(function (inputValue) {
                     if (inputValue === true) {
-                        const actIndex = self.activities.indexOf(activity);
-                        self.activities.splice(actIndex, 1);
+                        const actIndex = self.prof_activities.indexOf(activity);
+                        self.prof_activities.splice(actIndex, 1);
                         sweetalert('Deleted!', 'Your Activity has been deleted.', 'success');
                         self.$emit('deleting-activity', actIndex);
                     }

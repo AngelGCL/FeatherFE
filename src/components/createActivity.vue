@@ -1,23 +1,21 @@
 <template>
   <div class='ui basic content center aligned segment'>
     <b-button class='ui basic button icon' v-on:click="openForm" v-show="!isCreating">
-      <i class='plus icon'>+</i>
+      <font-awesome-icon icon="plus" />
     </b-button>
     <div class="mx-auto white-card rounded shadow mt-5" v-show="isCreating">
       <div class='content'>
         <div class='ui form'>
           <b-input-group prepend="Activity" class="mts-3">
-            <b-form-input v-model="title" placeholder="Activity title" type="text"></b-form-input>
-            <b-form-input v-model="timeStart" placeholder="mm/yyyy" type="text"></b-form-input>
+            <b-form-input v-model="actname" placeholder="Activity title" type="text"></b-form-input>
+            <b-form-input v-model="actdate" placeholder="YYYY-MM-DD" type="text"></b-form-input>
             <template>
-              <!-- object value -->
-<!--              <model-select :options="options"-->
-<!--                            v-model="fundRange"-->
-<!--                            placeholder="Choose the range of funds received">-->
-<!--              </model-select>-->
-              <b-form-select v-model="fundRange" :options="options"></b-form-select>
+              <b-form-select v-model="fundrange" :options="options"></b-form-select>
             </template>
           </b-input-group>
+          <template>
+            <b-form-textarea size="sm" v-model="description" placeholder="Description"></b-form-textarea>
+          </template>
           <div class='ui two button attached buttons'>
             <b-button variant="secondary" v-on:click="sendForm()">
               Create
@@ -40,9 +38,10 @@
         },
         data() {
             return {
-                title: '',
-                timeStart: '',
-                fundRange: '',
+                actname: '',
+                actdate: '',
+                fundrange: '',
+                description: '',
                 isCreating: false,
                 options: [
                     { value: '-$5k', text: '-$5k' },
@@ -60,18 +59,21 @@
                 this.isCreating = false;
             },
             sendForm() {
-                if (this.title.length > 0 && this.timeStart.length > 0 && this.fundRange.length > 0) {
-                    const title = this.title;
-                    const timeStart = this.timeStart;
-                    const fundRange = this.fundRange;
+                if (this.actname.length > 0 && this.actdate.length > 0 && this.fundrange.length > 0) {
+                    const actname = this.actname;
+                    const actdate = this.actdate;
+                    const fundrange = this.fundrange;
+                    const description = this.description;
                     this.$emit('create-activity', {
-                        title,
-                        timeStart,
-                        fundRange,
+                        actname,
+                        actdate,
+                        fundrange,
+                        description,
                     });
-                    this.title = '';
-                    this.timeStart = '';
-                    this.fundRange = '';
+                    this.actname = '';
+                    this.actdate = '';
+                    this.fundrange = '';
+                    this.description = '';
                     this.isCreating = false;
                 }
             },

@@ -52,7 +52,7 @@
         <b-col md="4" data-aos="fade-up">
           <font-awesome-icon icon="chart-bar" />
           <h4 style="font-weight: 600;">ANALYZE</h4>
-          <p>ILP offers the ability to visualize the data by academic departments, area of interest, and many more</p>
+          <p>ILP offers to the administrator the ability to visualize the data by academic departments, area of interest, and many more</p>
         </b-col>
       </b-row>
       <b-row class="tools" align-h="center" align-v="center">
@@ -60,7 +60,7 @@
           <b-container class="white-card">
             <h3>Create a profile. It's easy!</h3>
             <p>Search for your name in our database</p>
-            <b-button pill id="register-btn">
+            <b-button pill id="register-btn" @click="$bvModal.show('register-modal')">
               Register Here
               <font-awesome-icon icon="user-circle" />
             </b-button>
@@ -68,15 +68,9 @@
         </b-col>
         <b-col class="links">
           <div class="browse-bg">
-            <b-button pill to="/explore" variant="light">
+            <b-button class="align-middle" pill to="/explore" variant="light">
               Explore
               <font-awesome-icon icon="search" />
-            </b-button>
-          </div>
-          <div class="dashboard-bg">
-            <b-button to="/dashboard" pill variant="light">
-              Dashboard
-              <font-awesome-icon icon="tachometer-alt" />
             </b-button>
           </div>
         </b-col>
@@ -95,7 +89,7 @@ canvas {
   padding-right: inherit;
 }
 .links .btn {
-  margin-top: 10%;
+  margin-top: 30vh;
   background-color: #337137;
   color: white;
   border: none;
@@ -104,14 +98,8 @@ canvas {
   background-color: #265229;
 }
 .browse-bg {
-  height: 50%;
+  height: 100%;
   background-image: url("~@/assets/browse_bg.jpeg");
-  background-position: center;
-  background-size: cover;
-}
-.dashboard-bg {
-  height: 50%;
-  background-image: url("~@/assets/dashboard_bg.jpeg");
   background-position: center;
   background-size: cover;
 }
@@ -160,8 +148,9 @@ canvas {
   background: white;
 }
 .tools .white-card {
-  border-top: 5px solid #337137;
-  border-bottom: 5px solid #337137;
+  border-top: 5px solid #313e50;
+  border-bottom: 5px solid #313e50;
+  border-radius: 2px;
   width: 60%;
 }
 .tools .col p {
