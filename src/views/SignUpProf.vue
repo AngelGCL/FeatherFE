@@ -85,18 +85,19 @@
                   <b-form-invalid-feedback id="password-input-feedback">Please enter your password</b-form-invalid-feedback>
                 </b-input-group>
                 <template>
-                  <b-button @click="$bvModal.show('modal-name')">Search for Name</b-button>
+                  <b-button @click="$bvModal.show('modal-name')" v-b-tooltip.hover
+                            title="This will let you skip filling some information if there is some already in our storage.">Search for upr.edu email</b-button>
                   <!--NEED TO SHOW RESULT OF SEARCH-->
                   <b-modal id="modal-name">
                     <template v-slot:modal-header="{ close }">
-                      <h5>Search for your name.</h5>
+                      <h5>Search for your email.</h5>
+                      <p>This will let you skip filling some information if there is some already in our storage.</p>
                     </template>
                     <template v-slot:default="{ hide }">
                       <b-input-group>
-                        <b-form-input type="text" placeholder="First Name" v-model="name_data.firstname"></b-form-input>
-                        <b-form-input type="text" placeholder="Last Name" v-model="name_data.lastname"></b-form-input>
+                        <b-form-input type="text" placeholder="upr.edu email" v-model="email_data.upremail"></b-form-input>
                         <b-input-group-append>
-                          <b-button variant="outline-secondary" @click="searchName">Search</b-button>
+                          <b-button variant="outline-secondary" v-on:click="hide()" @click="searchEmail">Search</b-button>
                         </b-input-group-append>
                       </b-input-group>
                     </template>
@@ -174,16 +175,12 @@
         mixins: [validationMixin],
         data() {
             return {
+                mainUrl: 'http://localhost:5000',
+                mainHost: 'https://feather-ilp-back.herokuapp.com',
                 activities: [],
                 tags: [],
                 //value sets the value of the option chosen, text is the displayed text of the option
-                options: [
-                    { value: 'ICOM', text: 'ICOM' },
-                    { value: 'INEL', text: 'INEL' },
-                    { value: 'CIIC', text: 'CIIC' },
-                    { value: 'INSO', text: 'INSO' },
-                    { value: 'INQU', text: 'INQU' }
-                ],
+                options: [],
                 item: {
                     value: '',
                     text: ''
@@ -198,9 +195,8 @@
                     description: '',
                 },
                 //for name search
-                name_data:{
-                    firstname: '',
-                    lastname: '',
+                email_data:{
+                    upremail: '',
                 },
                 arr: [],
                 Val: 0,
@@ -295,15 +291,13 @@
                     );
                 }
             },
-            searchName: function() {
-                this.$http.get('https://feather-ilp-back.herokuapp.com/Feather/professor/signup/findname'+'/'+this.name_data.firstname+'/'
-                    +this.name_data.lastname, {
+            searchEmail: function() {
+                this.$http.get(this.mainHost+'/Feather/professor/signup/findemail'+'/'+this.email_data.upremail, {
                     headers: {
                         "Content-type": "application/json"
                     }
                 })
                     .then(response => {
-                        console.log(response.data);
                         this.arr.push(response.data['Professor']);
                         this.Val = response.data['Val'];
                         console.log(this.arr);
@@ -314,6 +308,7 @@
                     })
                     .catch(error => {
                         console.log(`error: ${error}`);
+                        sweetalert('Error 404', 'We could not find the email you are looking for.', 'error');
                     });
             },
             showNext() {
@@ -325,12 +320,24 @@
             createActivity(newAct) {
                 this.activities.push(newAct);
                 sweetalert('Success!', 'Activity created!', 'success');
-
-                console.log(this.activities);
             },
             createTag(newTag) {
                 this.tags.push(newTag);
-                console.log(this.tags);
+            },
+            onInit(){
+              this.$http.get(this.mainHost+'/Feather/professor/signup/init', {
+                headers: {
+                  "Content-type": "application/json"
+                }
+              })
+                .then(response => {
+                  for (let i=0; i<response.data['Departments'].length; i++){
+                    this.options.push({value: response.data['Departments'][i][0], text: response.data['Departments'][i][0]});
+                  }
+                })
+                .catch(error => {
+                  console.log(`error: ${error}`);
+                });
             },
         },
         components: {
@@ -340,6 +347,12 @@
             TagList,
             createTag,
         },
+        beforeRouteEnter(to, from, next) {
+          next(vm => {
+            vm.onInit();
+            next();
+          });
+        }
     };
 </script>
 

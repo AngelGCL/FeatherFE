@@ -67,7 +67,8 @@
               </b-input-group>
               <!--Modal button to search company-->
               <template>
-                <b-button @click="$bvModal.show('modal-scoped')">Search for Company</b-button>
+                <b-button @click="$bvModal.show('modal-scoped')" v-b-tooltip.hover
+                          title="This will make sure that there are no duplicate company names in the future">Search for Company</b-button>
                 <b-modal id="modal-scoped">
                   <template v-slot:modal-header="{ close }">
                     <h5>Search for your company.</h5>
@@ -132,13 +133,9 @@
       data() {
           return {
               //value sets the value of the option chosen, text is the displayed text of the option
-              options: [
-                  { value: 'Orion', text: 'Orion' },
-                  { value: 'Santander', text: 'Santander' },
-                  { value: 'Asus', text: 'Asus' },
-                  { value: 'Square Enix', text: 'Square Enix' },
-                  { value: 'Dell', text: 'Dell' }
-              ],
+            mainUrl: 'http://localhost:5000',
+            mainHost: 'https://feather-ilp-back.herokuapp.com',
+            options: [],
               form: {
                   email: '',
                   password: '',
@@ -235,12 +232,33 @@
                 this.tags.push(newTag);
                 console.log(this.tags);
             },
+            onInit(){
+              this.$http.get(this.mainHost+'/Feather/company/signup/init', {
+                headers: {
+                  "Content-type": "application/json"
+                }
+              })
+                .then(response => {
+                  for (let i=0; i<response.data['Companies'].length; i++){
+                    this.options.push({value: response.data['Companies'][i][0], text: response.data['Companies'][i][0]});
+                  }
+                })
+                .catch(error => {
+                  console.log(`error: ${error}`);
+                });
+            },
         },
         components: {
             ModelSelect,
             TagList,
             createTag,
-        },
+          },
+        beforeRouteEnter(to, from, next) {
+          next(vm => {
+            vm.onInit();
+            next();
+          });
+        }
     };
 </script>
 
